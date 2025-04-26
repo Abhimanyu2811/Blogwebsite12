@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     environment {
-        ACR_NAME = 'acrrathore01'
-        AZURE_CREDENTIALS_ID = 'jenkins-pipeline-sp'
+        ACR_NAME = 'acrabhimanyu'
+        AZURE_CREDENTIALS_ID = 'jenkins-pipeline-asp'
         ACR_LOGIN_SERVER = "${ACR_NAME}.azurecr.io"
         IMAGE_NAME = 'nodejsdocker1'
         IMAGE_TAG = 'latest'
-        RESOURCE_GROUP = 'rathoreResourceGroup'
-        AKS_CLUSTER = 'rathoreAKSCluster'
+        RESOURCE_GROUP = 'myResourceGroup'
+        AKS_CLUSTER = 'myAKSCluster01'
         TF_WORKING_DIR = '.'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Aryan-Raj-Singh-Rathore/JenkinsWithNodejs.git'
+                git branch: 'main', url: 'https://github.com/Abhimanyu2811/JenkinsWithNodejsblog.git'
             }
         }
         stage('Install Node.js Dependencies') {
@@ -88,7 +88,9 @@ pipeline {
 
         stage('Deploy to AKS') {
             steps {
-                bat "kubectl apply -f blogWebsite-main/Test.yaml"
+                dir('blogWebsite-main'){
+                bat "kubectl apply -f Test.yaml"
+                }
             }
         }
     }
